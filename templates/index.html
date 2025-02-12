@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search User Data</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Search User Data</h1>
+        <form method="POST">
+            <input type="text" name="search_query" placeholder="Enter ID, Username or Email" required>
+            <button type="submit">Search</button>
+        </form>
+
+        {% if result %}
+            <div class="result">
+                <h2>Found:</h2>
+                <p><strong>ID:</strong> {{ result['id'] }}</p>
+                <p><strong>Username:</strong> {{ result['username'] }}</p>
+                <p><strong>Email:</strong> {{ result['email'] }}</p>
+            </div>
+        {% elif result is not none %}
+            <p>No matching data found.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

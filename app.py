@@ -10,6 +10,23 @@ def search_data(query):
     # Open the CSV file and search
     with open(file_path, mode='r') as file:
         reader = csv.DictReader(file)
+        # Check for exact match for ID first
+        for row in reader:
+            # Search ID first, then Username, then Email
+            if query.lower() == row['id'].lower():
+                return row
+        file.seek(0)  # Reset reader to start of file again after searching for ID
+        for row in reader:
+            # Search Username second
+            if query.lower() == row['username'].lower():
+                return row
+        file.seek(0)  # Reset reader again after searching for Username
+        for row in reader:
+            # Search Email third
+            if query.lower() == row['email'].lower():
+                return row
+        file.seek(0)  # Reset reader for the final keyword search
+        # If no exact match, search by keyword (ID, Username, or Email)
         for row in reader:
             if query.lower() in row['id'].lower() or query.lower() in row['username'].lower() or query.lower() in row['email'].lower():
                 return row
